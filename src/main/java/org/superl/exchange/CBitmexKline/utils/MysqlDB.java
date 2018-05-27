@@ -34,8 +34,8 @@ import java.sql.SQLException;
 @Log4j
 public class MysqlDB {
 
-    private static final String MYSQL_URL = "jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false";
-    private static final String MYSQL_NAME = "dbtest";
+    private static final String MYSQL_URL = "jdbc:mysql://127.0.0.1:3306/testb?serverTimezone=UTC&characterEncoding=utf8&useSSL=false&autoReconnect=true&failOverReadOnly=false";
+    private static final String MYSQL_NAME = "superl";
     private static final String MYSQL_PASSWORD = "123456";
     private static Connection conn = null;
 
@@ -67,19 +67,19 @@ public class MysqlDB {
      * 添加数据库记录
      */
     public static void insertTicket(Ticket data)  {
-        String insert_sql = "insert into TICKET(`symbol`,`open`,`close`,`high`,`low`,`trades`,`volume`,`timestamp`,`timestampl`)values(?,?,?,?,?,?,?,?,?)";
+        String symbol = data.getSymbol();
+        String insert_sql = "insert into TICKET_"+symbol+"(`open`,`close`,`high`,`low`,`trades`,`volume`,`timestamp`,`timestampl`)values(?,?,?,?,?,?,?,?)";
         try{
             PreparedStatement pstmt = conn.prepareStatement(insert_sql);
 
-            pstmt.setString(1, data.getSymbol());
-            pstmt.setDouble(2, data.getOpen());
-            pstmt.setDouble(3, data.getClose());
-            pstmt.setDouble(4, data.getHigh());
-            pstmt.setDouble(5, data.getLow());
-            pstmt.setInt(6, data.getTrades());
-            pstmt.setDouble(7, data.getVolume());
-            pstmt.setLong(8, data.getTimestampl());
-            pstmt.setString(9, data.getTimestamp());
+            pstmt.setDouble(1, data.getOpen());
+            pstmt.setDouble(2, data.getClose());
+            pstmt.setDouble(3, data.getHigh());
+            pstmt.setDouble(4, data.getLow());
+            pstmt.setInt(5, data.getTrades());
+            pstmt.setDouble(6, data.getVolume());
+            pstmt.setLong(7, data.getTimestampl());
+            pstmt.setString(8, data.getTimestamp());
             pstmt.execute();
         }catch (Exception e){
             log.error(e.getMessage());
